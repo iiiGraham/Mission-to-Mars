@@ -4,7 +4,7 @@ from flask_pymongo import PyMongo
 import scraping
 
 # set up Flask
-app = Flask(__name__)
+app = Flask(__name__, template_folder='templates')
 
 # use flask_pymongo to set connection to mongo db
 app.config["MONGO_URI"] = "mongodb://localhost:27017/mars_app"
@@ -28,10 +28,10 @@ def scrape():
     # update the db
     mars.update({}, mars_data, upsert=True)
     # go back to the home page and show what was scraped
-    return redirect('/', code=302)
+    return redirect("/", code=302)
     # mars.update_many({}, mars_data, upsert=True) - this might be the better way to do it because update is deprecated. 
 
-    # code to make Flask run - the app will not work without this!
-    if __name__ == "__main__":
-        app.run()
+# code to make Flask run - the app will not work without this!
+if __name__ == "__main__":
+    app.run(debug=True)
 
